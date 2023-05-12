@@ -17,7 +17,7 @@ const NETWORK_MAP = {
   97: 'bscTestnet', // BSC testnet
 };
 
-task('deploy:contract', 'Deploy contract', async () => {
+task('deploy:contract-721', 'Deploy contract', async () => {
   const accounts = await ethers.getSigners();
   const signer = accounts[0];
 
@@ -36,7 +36,7 @@ task('deploy:contract', 'Deploy contract', async () => {
   writeContract(contractName, contract.address, signer.address);
 });
 
-task('verify:contract', 'Verify NFTFaucetERC721 contract', async () => {
+task('verify:contract-721', 'Verify NFTFaucetERC721 contract', async () => {
   const { chainId } = await hre.ethers.provider.getNetwork();
   const networkName = NETWORK_MAP[chainId];
 
