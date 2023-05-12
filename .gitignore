@@ -1,0 +1,10 @@
+# .gitignore
+
+# Ignore node_modules
+gradient-circle-image-generator/node_modules/
+
+# Ignore images folder
+gradient-circle-image-generator/images/
+
+# Ignore json folder
+gradient-circle-image-generator/json/

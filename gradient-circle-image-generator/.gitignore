@@ -1,0 +1,10 @@
+# .gitignore
+
+# Ignore node_modules
+node_modules/
+
+# Ignore images folder
+images/
+
+# Ignore json folder
+json/

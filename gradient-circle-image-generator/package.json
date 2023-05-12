@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "js-image-generator": "^1.0.4"
+  }
+}
