@@ -33,14 +33,20 @@ task('deploy:contract-721', 'Deploy contract', async () => {
 
   console.info('NFTFaucetERC721 Deployed at ', contract.address);
 
-  writeContract(contractName, contract.address, signer.address);
+  await writeContract(
+    contractName,
+    contract.address,
+    signer.address,
+    [],
+    networkName,
+  );
 });
 
 task('verify:contract-721', 'Verify NFTFaucetERC721 contract', async () => {
   const { chainId } = await hre.ethers.provider.getNetwork();
   const networkName = NETWORK_MAP[chainId];
 
-  const nftFaucetERC721 = readContract(contractName);
+  const nftFaucetERC721 = await readContract(contractName, networkName);
   const address = nftFaucetERC721.address;
 
   if (!address) {
@@ -62,6 +68,6 @@ task('verify:contract-721', 'Verify NFTFaucetERC721 contract', async () => {
   }
 });
 
-task('export:abi', 'Export NFTFaucetERC721 contract ABI', () => {
-  writeABI('NFTFaucetERC721.sol/NFTFaucetERC721.json', contractName);
+task('export:abi-721', 'Export NFTFaucetERC721 contract ABI', async () => {
+  await writeABI('NFTFaucetERC721.sol/NFTFaucetERC721.json', contractName);
 });

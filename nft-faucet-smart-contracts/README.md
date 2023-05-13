@@ -60,7 +60,7 @@ This will verify the contract on the corresponding network and update the contra
 To export the NFTFaucetERC721 contract ABI to a JSON file, run the following command:
 
 ```
-npx hardhat export:abi
+npx hardhat export:abi-721
 ```
 
 This will generate a `NFTFaucetERC721.json` file containing the contract's ABI in the specified output folder.

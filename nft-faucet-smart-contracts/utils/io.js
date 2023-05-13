@@ -4,19 +4,17 @@ const path = require('path');
 
 dotenv.config();
 
-const getNetwork = async () => {
-  const provider = ethers.getDefaultProvider();
-  const chainId = await provider.getChainId();
-  return chainId;
-};
-
-const writeContract = async (contractFileName, address, deployer, args) => {
-  const NETWORK = await getNetwork();
-
+const writeContract = async (
+  contractFileName,
+  address,
+  deployer,
+  args,
+  network,
+) => {
   fs.writeFileSync(
     path.join(
       __dirname,
-      `../publish/addresses/${NETWORK}/${contractFileName}.json`,
+      `../publish/addresses/${network}/${contractFileName}.json`,
     ),
     JSON.stringify(
       {
@@ -30,14 +28,12 @@ const writeContract = async (contractFileName, address, deployer, args) => {
   );
 };
 
-const readContract = async (contractFileName) => {
-  const NETWORK = await getNetwork();
-
+const readContract = async (contractFileName, network) => {
   try {
     const rawData = fs.readFileSync(
       path.join(
         __dirname,
-        `../publish/addresses/${NETWORK}/${contractFileName}.json`,
+        `../publish/addresses/${network}/${contractFileName}.json`,
       ),
     );
     const info = JSON.parse(rawData.toString());
