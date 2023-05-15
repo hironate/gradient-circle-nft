@@ -22,6 +22,7 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     /// @notice Constructor initializes the ERC721 contract with its name and symbol
     constructor() ERC721("NFTFaucet", "FCT") {
         _currentBaseURI = "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/";
+        _tokenIdCounter.increment(); // Start the token ID counter from 1
     }
 
     /// @notice Returns the current base URI
@@ -64,5 +65,12 @@ contract NFTFaucetERC721 is ERC721, Ownable {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
+    }
+
+    /// @notice Withdraws funds from the contract to the owner's address
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "NFTFaucetERC721: No funds to withdraw");
+        payable(owner()).transfer(balance);
     }
 }

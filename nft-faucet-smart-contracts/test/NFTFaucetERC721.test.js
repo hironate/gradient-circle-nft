@@ -35,9 +35,9 @@ describe('NFTFaucetERC721', function () {
         .connect(addr1)
         .safeMint(addr1.address, { value: mintingFee });
 
-      expect(await nftFaucetERC721.ownerOf(0)).to.equal(addr1.address);
-      expect(await nftFaucetERC721.tokenURI(0)).to.equal(
-        'https://example.com/0.json',
+      expect(await nftFaucetERC721.ownerOf(1)).to.equal(addr1.address);
+      expect(await nftFaucetERC721.tokenURI(1)).to.equal(
+        'https://example.com/1.json',
       );
     });
 
@@ -62,14 +62,54 @@ describe('NFTFaucetERC721', function () {
 
     it('Should set the base URI correctly', async function () {
       await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
-      expect(await nftFaucetERC721.tokenURI(0)).to.equal(
-        'https://example.com/0.json',
+      expect(await nftFaucetERC721.tokenURI(1)).to.equal(
+        'https://example.com/1.json',
       );
     });
 
     it('Should fail to set base URI if not owner', async function () {
       await expect(
         nftFaucetERC721.connect(addr1).setBaseURI('https://example.com/'),
+      ).to.be.revertedWith('Ownable: caller is not the owner');
+    });
+  });
+
+  describe('Withdrawal', function () {
+    it('Owner should be able to withdraw funds from the contract', async function () {
+      const mintingFee = ethers.utils.parseEther('0.000069');
+
+      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
+      await nftFaucetERC721
+        .connect(addr1)
+        .safeMint(addr1.address, { value: mintingFee });
+
+      const contractBalance = await ethers.provider.getBalance(
+        nftFaucetERC721.address,
+      );
+      expect(contractBalance).to.equal(mintingFee);
+
+      const balanceBefore = await ethers.provider.getBalance(owner.address);
+      const gasPrice = await ethers.provider.getGasPrice(); // Get gas price
+
+      const tx = await nftFaucetERC721.connect(owner).withdraw();
+      const receipt = await tx.wait(); // Wait for transaction to be mined
+
+      const gasUsed = receipt.gasUsed.mul(gasPrice); // Calculate gas used
+
+      const balanceAfter = await ethers.provider.getBalance(owner.address);
+      expect(balanceAfter.sub(balanceBefore).add(gasUsed)).to.equal(mintingFee);
+    });
+
+    it('Non-owner should not be able to withdraw funds from the contract', async function () {
+      const mintingFee = ethers.utils.parseEther('0.000069');
+
+      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
+      await nftFaucetERC721
+        .connect(addr1)
+        .safeMint(addr1.address, { value: mintingFee });
+
+      await expect(
+        nftFaucetERC721.connect(addr1).withdraw(),
       ).to.be.revertedWith('Ownable: caller is not the owner');
     });
   });
