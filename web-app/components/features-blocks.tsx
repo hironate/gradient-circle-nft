@@ -40,7 +40,7 @@ export default function FeaturesBlocks() {
                 Ethereum
               </h4>
               <p className="text-gray-600 text-center">
-                You can mint circle gradient on Ethereum Mainnet, Sepolia and
+                You can mint Gradient Circle on Ethereum Mainnet, Sepolia and
                 Goerli Chains
               </p>
             </div>
@@ -58,7 +58,7 @@ export default function FeaturesBlocks() {
                 Polygon
               </h4>
               <p className="text-gray-600 text-center">
-                You can mint circle gradient on Polygon Mainnet and Mumbai
+                You can mint Gradient Circle on Polygon Mainnet and Mumbai
                 Testnet
               </p>
             </div>
@@ -72,7 +72,7 @@ export default function FeaturesBlocks() {
                 Binance Smart Chain
               </h4>
               <p className="text-gray-600 text-center">
-                You can mint circle gradient on BSC Mainnet and BSC Testnet
+                You can mint Gradient Circle on BSC Mainnet and BSC Testnet
               </p>
             </div>
           </div>
