@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import Link from 'next/link';
@@ -6,6 +6,11 @@ import AvatarImage from '@/public/avatar.png';
 import Image from 'next/image';
 
 function ConnectWalletProfile() {
+
+  useEffect(()=>{
+    if(localStorage.getItem("isWalletConnected") === "true") setConnection();
+  },[])
+
   const { address, isConnected } = useAccount();
   const { connect } = useConnect({
     connector: new InjectedConnector(),
@@ -22,6 +27,14 @@ function ConnectWalletProfile() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  const setConnection = ()=>{
+      try{
+        connect();
+        localStorage.setItem("isWalletConnected","true");
+      }catch(error){
+      }
+  }
 
   if (isConnected) {
     return (
@@ -46,7 +59,10 @@ function ConnectWalletProfile() {
             </div>
             <div className="py-1">
               <button
-                onClick={() => disconnect()}
+                onClick={() => {
+                    disconnect();
+                    localStorage.setItem("isWalletConnected","false");
+                }}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
                 Disconnect
@@ -61,7 +77,7 @@ function ConnectWalletProfile() {
   return (
     <Link
       href="#"
-      onClick={() => connect()}
+      onClick={setConnection}
       className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
     >
       <span>Connect Wallet</span>
