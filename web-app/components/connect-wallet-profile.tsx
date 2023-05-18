@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { InjectedConnector } from 'wagmi/connectors/injected';
-import Link from 'next/link';
-import AvatarImage from '@/public/avatar.png';
-import Image from 'next/image';
+import React, { useEffect, useState } from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import Link from "next/link";
+import AvatarImage from "@/public/avatar.png";
+import WalletImage from "@/public/wallet.png";
+import Image from "next/image";
 
 function ConnectWalletProfile() {
-
-  useEffect(()=>{
-    if(localStorage.getItem("isWalletConnected") === "true") setConnection();
-  },[])
+  useEffect(() => {
+    if (localStorage.getItem("isWalletConnected") === "true") setConnection();
+  }, []);
 
   const { address, isConnected } = useAccount();
   const { connect } = useConnect({
@@ -20,32 +20,31 @@ function ConnectWalletProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const shortAddress = (address: any) => {
-    if (!address) return '';
-    return address.slice(0, 6) + '...' + address.slice(-4);
+    if (!address) return "";
+    return address.slice(0, 6) + "..." + address.slice(-4);
   };
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const setConnection = ()=>{
-      try{
-        connect();
-        localStorage.setItem("isWalletConnected","true");
-      }catch(error){
-      }
-  }
+  const setConnection = () => {
+    try {
+      connect();
+      localStorage.setItem("isWalletConnected", "true");
+    } catch (error) {}
+  };
 
   if (isConnected) {
     return (
       <div className="relative inline-block">
         <div
-          className="inline-flex items-center cursor-pointer btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
+          className="inline-flex items-center cursor-pointer btn-sm text-gray-700  font-medium bg-white hover:bg-slate-100 rounded-md ml-3 border-gray-200"
           onClick={toggleDropdown}
         >
           <span>{shortAddress(address)}</span>
 
-          <Image src={AvatarImage} alt="Avatar" className=" ml-2 h-4 w-4 " />
+          <Image src={AvatarImage} alt="Avatar" className=" ml-2 h-6 w-6 " />
         </div>
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg">
@@ -60,8 +59,8 @@ function ConnectWalletProfile() {
             <div className="py-1">
               <button
                 onClick={() => {
-                    disconnect();
-                    localStorage.setItem("isWalletConnected","false");
+                  disconnect();
+                  localStorage.setItem("isWalletConnected", "false");
                 }}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
@@ -78,8 +77,13 @@ function ConnectWalletProfile() {
     <Link
       href="#"
       onClick={setConnection}
-      className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
+      className="btn-sm text-gray-700  font-medium bg-white hover:bg-slate-100 ml-3 rounded-md border-gray-200"
     >
+      <Image
+        src={WalletImage}
+        alt={`Wallet `}
+        className="mr-2 w-5 h-5 text-center"
+      />
       <span>Connect Wallet</span>
       <svg
         className="w-3 h-3 fill-current text-gray-400 shrink-0 ml-2 -mr-1"

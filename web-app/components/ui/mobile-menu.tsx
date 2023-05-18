@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { Transition } from '@headlessui/react';
-import Link from 'next/link';
-
+import { useState, useRef, useEffect } from "react";
+import { Transition } from "@headlessui/react";
+import Link from "next/link";
+import ConnectWalletProfile from "../connect-wallet-profile";
+import ChainSelector from "../chain-selector";
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
@@ -22,8 +23,8 @@ export default function MobileMenu() {
         return;
       setMobileNavOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close the mobile menu if the esc key is pressed
@@ -32,8 +33,8 @@ export default function MobileMenu() {
       if (!mobileNavOpen || keyCode !== 27) return;
       setMobileNavOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
@@ -41,7 +42,7 @@ export default function MobileMenu() {
       {/* Hamburger button */}
       <button
         ref={trigger}
-        className={`hamburger ${mobileNavOpen && 'active'}`}
+        className={`hamburger ${mobileNavOpen && "active"}`}
         aria-controls="mobile-nav"
         aria-expanded={mobileNavOpen}
         onClick={() => setMobileNavOpen(!mobileNavOpen)}
@@ -91,11 +92,13 @@ export default function MobileMenu() {
                 Gradient Circle Collection
               </Link>
             </li>
-            <li>
-              <Link
+            <li className="flex justify-center mb-4">
+              {/* <Link
                 href="/#"
                 className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 w-full my-2"
-                onClick={() => setMobileNavOpen(false)}
+                onClick={() => {
+                  setMobileNavOpen(false);
+                }}
               >
                 <span>Connect Wallet</span>
                 <svg
@@ -109,7 +112,11 @@ export default function MobileMenu() {
                     fillRule="nonzero"
                   />
                 </svg>
-              </Link>
+              </Link> */}
+              <ChainSelector></ChainSelector>
+            </li>
+            <li className="flex justify-center">
+              <ConnectWalletProfile></ConnectWalletProfile>
             </li>
           </ul>
         </Transition>
