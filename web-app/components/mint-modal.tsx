@@ -1,20 +1,21 @@
 import { SetStateAction, useState } from 'react';
 import { QuantitySelector } from './quantity-selector';
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount, useConnect, useSigner } from 'wagmi';
 import { getNetwork } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
+import { toast } from 'react-toastify';
+import { contractAddresses721 } from '@/utils/constants';
+import ERC721Service from '../app/services/chain/ERC721Service';
+import NFTFaucetERC721ABI from '../../nft-faucet-smart-contracts/publish/abis/NFTFaucetERC721.json';
 
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
 const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const [selectedToken, setSelectedToken] = useState('ERC721');
   const [amount, setAmount] = useState(1);
-
-  const toggleModal = () => {
-    onClose();
-  };
-
+  const { data: signer } = useSigner();
   const { address, isConnected } = useAccount();
+
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
@@ -27,6 +28,10 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
     } catch (error) {}
   };
 
+  const toggleModal = () => {
+    onClose();
+  };
+
   const handleTokenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedToken(event.target.value);
   };
@@ -35,10 +40,24 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
     setAmount(amount);
   };
 
-  const handleMint = () => {
+  const handleMint = async () => {
     setConnection();
-    let chainId = getNetwork().chain?.id || 1;
+    let chainId: number = getNetwork().chain?.id || 1;
+    const contractAddress: string = contractAddresses721[chainId];
+
     console.log({ selectedToken, amount, chainId });
+    console.log({ chainId });
+    const contractInstance = new ERC721Service(
+      signer,
+      chainId,
+      contractAddress,
+      NFTFaucetERC721ABI,
+    );
+
+    const txn = await contractInstance.mint();
+    console.log(txn);
+    txn.wait(1);
+    toast.success('NFT Minted...');
   };
 
   return (

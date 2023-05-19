@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Image from 'next/image';
 import { getNetwork } from '@wagmi/core';
-import { blockchains } from '../utils/constants';
+import { blockchains } from '@/utils/constants';
 import { switchNetwork } from '@wagmi/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
