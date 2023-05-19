@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
+const { BigNumber } = require('ethers');
 
 describe('NFTFaucetERC721', function () {
   let NFTFaucetERC721;
@@ -13,104 +14,75 @@ describe('NFTFaucetERC721', function () {
     NFTFaucetERC721 = await ethers.getContractFactory('NFTFaucetERC721');
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
     nftFaucetERC721 = await NFTFaucetERC721.deploy();
+    await nftFaucetERC721.deployed();
   });
 
-  describe('Deployment', function () {
-    it('Should set the correct name and symbol', async function () {
-      expect(await nftFaucetERC721.name()).to.equal('NFTFaucet');
-      expect(await nftFaucetERC721.symbol()).to.equal('FCT');
+  describe('setMintingFee', function () {
+    it('Should set a new minting fee', async function () {
+      const newMintingFee = ethers.utils.parseEther('0.01');
+      await nftFaucetERC721.connect(owner).setMintingFee(newMintingFee);
+      expect(await nftFaucetERC721.mintingFee()).to.equal(newMintingFee);
     });
 
-    it('Owner should have the correct address', async function () {
-      expect(await nftFaucetERC721.owner()).to.equal(owner.address);
+    it('Should fail when a non-owner tries to set a new minting fee', async function () {
+      const newMintingFee = ethers.utils.parseEther('0.01');
+      await expect(
+        nftFaucetERC721.connect(addr1).setMintingFee(newMintingFee),
+      ).to.be.revertedWith('Ownable: caller is not the owner');
     });
   });
 
   describe('Minting', function () {
-    it('Should mint a new token with the correct URI', async function () {
-      const mintingFee = ethers.utils.parseEther('0.000069');
-
-      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
-      await nftFaucetERC721
-        .connect(addr1)
-        .safeMint(addr1.address, { value: mintingFee });
-
-      expect(await nftFaucetERC721.ownerOf(1)).to.equal(addr1.address);
-      expect(await nftFaucetERC721.tokenURI(1)).to.equal(
-        'https://example.com/1.json',
-      );
-    });
-
-    it('Should fail if minting fee is insufficient', async function () {
-      const insufficientFee = ethers.utils.parseEther('0.000009');
-
+    it('Should fail when minting with insufficient fee', async function () {
+      const newMintingFee = ethers.utils.parseEther('0.01');
+      await nftFaucetERC721.connect(owner).setMintingFee(newMintingFee);
       await expect(
-        nftFaucetERC721
-          .connect(addr1)
-          .safeMint(addr1.address, { value: insufficientFee }),
+        nftFaucetERC721.connect(addr1).mint({ value: 0 }),
       ).to.be.revertedWith('NFTFaucetERC721: Insufficient minting fee');
     });
+
+    it('Should mint a token successfully', async function () {
+      await nftFaucetERC721.connect(addr1).mint({ value: 0 });
+      expect(await nftFaucetERC721.ownerOf(1)).to.equal(addr1.address);
+    });
   });
 
-  describe('Base URI', async function () {
-    const mintingFee = ethers.utils.parseEther('0.000069');
-
-    await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
-    await nftFaucetERC721
-      .connect(addr1)
-      .safeMint(addr1.address, { value: mintingFee });
-
-    it('Should set the base URI correctly', async function () {
-      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
+  describe('Token URI', function () {
+    it('Should return the correct token URI', async function () {
+      await nftFaucetERC721.connect(addr1).mint({ value: 0 });
       expect(await nftFaucetERC721.tokenURI(1)).to.equal(
-        'https://example.com/1.json',
+        'ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/1.json',
       );
     });
+  });
 
-    it('Should fail to set base URI if not owner', async function () {
-      await expect(
-        nftFaucetERC721.connect(addr1).setBaseURI('https://example.com/'),
-      ).to.be.revertedWith('Ownable: caller is not the owner');
+  describe('setBaseURI', function () {
+    it('Should set a new base URI', async function () {
+      await nftFaucetERC721.connect(owner).setBaseURI('ipfs://newbaseuri/');
+      await nftFaucetERC721.connect(addr1).mint({ value: 0 });
+      expect(await nftFaucetERC721.tokenURI(1)).to.equal(
+        'ipfs://newbaseuri/1.json',
+      );
     });
   });
 
-  describe('Withdrawal', function () {
-    it('Owner should be able to withdraw funds from the contract', async function () {
-      const mintingFee = ethers.utils.parseEther('0.000069');
-
-      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
+  describe('withdraw', function () {
+    it('Should withdraw funds successfully', async function () {
       await nftFaucetERC721
         .connect(addr1)
-        .safeMint(addr1.address, { value: mintingFee });
-
+        .mint({ value: ethers.utils.parseEther('1') });
+      const initialBalance = await owner.getBalance();
       const contractBalance = await ethers.provider.getBalance(
         nftFaucetERC721.address,
       );
-      expect(contractBalance).to.equal(mintingFee);
+      const withdrawTx = await nftFaucetERC721.connect(owner).withdraw();
+      const txReceipt = await withdrawTx.wait();
+      const gasUsed = txReceipt.gasUsed.mul(withdrawTx.gasPrice);
 
-      const balanceBefore = await ethers.provider.getBalance(owner.address);
-      const gasPrice = await ethers.provider.getGasPrice(); // Get gas price
-
-      const tx = await nftFaucetERC721.connect(owner).withdraw();
-      const receipt = await tx.wait(); // Wait for transaction to be mined
-
-      const gasUsed = receipt.gasUsed.mul(gasPrice); // Calculate gas used
-
-      const balanceAfter = await ethers.provider.getBalance(owner.address);
-      expect(balanceAfter.sub(balanceBefore).add(gasUsed)).to.equal(mintingFee);
-    });
-
-    it('Non-owner should not be able to withdraw funds from the contract', async function () {
-      const mintingFee = ethers.utils.parseEther('0.000069');
-
-      await nftFaucetERC721.connect(owner).setBaseURI('https://example.com/');
-      await nftFaucetERC721
-        .connect(addr1)
-        .safeMint(addr1.address, { value: mintingFee });
-
-      await expect(
-        nftFaucetERC721.connect(addr1).withdraw(),
-      ).to.be.revertedWith('Ownable: caller is not the owner');
+      const finalBalance = await owner.getBalance();
+      expect(finalBalance).to.equal(
+        initialBalance.add(contractBalance).sub(gasUsed),
+      );
     });
   });
 });

@@ -17,7 +17,9 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     Counters.Counter private _tokenIdCounter;
 
     string private _currentBaseURI;
-    uint256 private mintingFee = 0.000069 ether;
+    uint256 public mintingFee = 0 ether;
+
+    event Mint(address indexed to, uint256 indexed tokenId);
 
     /// @notice Constructor initializes the ERC721 contract with its name and symbol
     constructor() ERC721("NFTFaucet", "FCT") {
@@ -55,16 +57,22 @@ contract NFTFaucetERC721 is ERC721, Ownable {
                 : "";
     }
 
-    /// @notice Mints a new token to the specified address with a required minting fee
-    /// @param to The address to which the new token will be minted
-    function safeMint(address to) public payable {
+    /// @notice Mints a new token
+    function mint() public payable {
         require(
             msg.value >= mintingFee,
             "NFTFaucetERC721: Insufficient minting fee"
         );
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
+        _safeMint(msg.sender, tokenId);
+        emit Mint(msg.sender, tokenId);
+    }
+
+    /// @notice Sets minting Fee
+    /// @param newMintingFee Minting fee in wei
+    function setMintingFee(uint256 newMintingFee) external onlyOwner {
+        mintingFee = newMintingFee;
     }
 
     /// @notice Withdraws funds from the contract to the owner's address
