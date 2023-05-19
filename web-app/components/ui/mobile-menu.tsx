@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Transition } from '@headlessui/react';
 import Link from 'next/link';
-
+import ConnectWalletProfile from '../connect-wallet-profile';
+import ChainSelector from '../chain-selector';
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
@@ -91,11 +92,13 @@ export default function MobileMenu() {
                 Gradient Circle Collection
               </Link>
             </li>
-            <li>
-              <Link
+            <li className="flex justify-center mb-4">
+              {/* <Link
                 href="/#"
                 className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 w-full my-2"
-                onClick={() => setMobileNavOpen(false)}
+                onClick={() => {
+                  setMobileNavOpen(false);
+                }}
               >
                 <span>Connect Wallet</span>
                 <svg
@@ -109,7 +112,11 @@ export default function MobileMenu() {
                     fillRule="nonzero"
                   />
                 </svg>
-              </Link>
+              </Link> */}
+              <ConnectWalletProfile></ConnectWalletProfile>
+            </li>
+            <li className="flex justify-center">
+              <ChainSelector></ChainSelector>
             </li>
           </ul>
         </Transition>

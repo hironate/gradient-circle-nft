@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import Logo from './logo';
-import Dropdown from '@/components/utils/dropdown';
+// import Dropdown from '@/components/utils/dropdown';
 import MobileMenu from './mobile-menu';
 import ConnectWalletProfile from '../connect-wallet-profile';
+import ChainSelector from '../chain-selector';
 
 export default function Header() {
   const [top, setTop] = useState<boolean>(true);
@@ -64,6 +65,7 @@ export default function Header() {
                     />
                   </svg>
                 </Link> */}
+                <ChainSelector></ChainSelector>
                 <ConnectWalletProfile></ConnectWalletProfile>
               </li>
             </ul>

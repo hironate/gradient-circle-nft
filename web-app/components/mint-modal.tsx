@@ -110,9 +110,18 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                     onChange={handleChainChange}
                     className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
-                    <option value="">Select a chain</option>
+                    <option
+                      value=""
+                      className="bg-white rounded-md shadow-lg text-gray-700 text-md my-2 hover:bg-slate-100"
+                    >
+                      Select a chain
+                    </option>
                     {chainOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        className="bg-white rounded-md shadow-lg text-gray-700 text-md my-2 hover:bg-slate-100"
+                      >
                         {option.label}
                       </option>
                     ))}
