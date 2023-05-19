@@ -39,36 +39,38 @@ function ConnectWalletProfile() {
     return (
       <div className="relative inline-block">
         <div
-          className="inline-flex items-center cursor-pointer btn-sm text-gray-700  font-medium bg-white hover:bg-slate-100 rounded-md ml-3 border-gray-200"
+          className="inline-flex items-center cursor-pointer btn-sm text-gray-700 h-10  font-medium bg-white hover:bg-gray-50 rounded-md ml-3 border-gray-300 shadow-none"
           onClick={toggleDropdown}
         >
           <span>{shortAddress(address)}</span>
 
           <Image src={AvatarImage} alt="Avatar" className=" ml-2 h-6 w-6 " />
         </div>
-        {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg">
-            <div className="py-1">
-              <Link
-                href="/my-mints"
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                My Mints
-              </Link>
+        <div className={` ${dropdownOpen ? 'h-28' : ''} max-2xl md:h-auto`}>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg">
+              <div className="py-1">
+                <Link
+                  href="/my-mints"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  My Mints
+                </Link>
+              </div>
+              <div className="py-1">
+                <button
+                  onClick={() => {
+                    disconnect();
+                    localStorage.setItem('isWalletConnected', 'false');
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Disconnect
+                </button>
+              </div>
             </div>
-            <div className="py-1">
-              <button
-                onClick={() => {
-                  disconnect();
-                  localStorage.setItem('isWalletConnected', 'false');
-                }}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Disconnect
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   }
@@ -77,7 +79,7 @@ function ConnectWalletProfile() {
     <Link
       href="#"
       onClick={setConnection}
-      className="btn-sm text-gray-700  font-medium bg-white hover:bg-slate-100 ml-3 rounded-md border-gray-200"
+      className="btn-sm text-gray-700  font-medium bg-white hover:bg-gray-50 ml-3 rounded-md border-gray-300 shadow-none"
     >
       <Image
         src={WalletImage}

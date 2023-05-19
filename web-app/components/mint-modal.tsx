@@ -15,7 +15,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
 
   const [selectedChain, setSelectedChain] = useState('');
   const [selectedToken, setSelectedToken] = useState('ERC721');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('1');
   const [chainError, setChainError] = useState('');
   const [amountError, setAmountError] = useState('');
 
@@ -96,7 +96,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
               </div>
 
               <div className="p-6 space-y-4">
-                <div className="flex items-center space-x-4">
+                {/* <div className="flex items-center space-x-4">
                   <label
                     htmlFor="chain"
                     className="font-medium text-gray-700 text-right"
@@ -126,16 +126,16 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
                 {chainError && (
                   <p className="text-red-500 text-sm">{chainError}</p>
                 )}
 
                 <div className="flex items-center space-x-4">
-                  <label className="font-medium text-gray-700 text-right">
+                  <label className="font-medium text-gray-700 text-right mr-4">
                     Token:
                   </label>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center ml-4 space-x-6">
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
@@ -161,24 +161,29 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                   </div>
                 </div>
 
-                {selectedToken === 'ERC1155' && (
-                  <div className="flex items-center space-x-4">
-                    <label
-                      htmlFor="amount"
-                      className="font-medium text-gray-700 text-right"
-                    >
-                      Amount:
-                    </label>
-                    <input
-                      type="number"
-                      id="amount"
-                      name="amount"
-                      value={amount}
-                      onChange={handleAmountChange}
-                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                  </div>
-                )}
+                <div className="flex items-center space-x-4">
+                  <label
+                    htmlFor="amount"
+                    className="font-medium text-gray-700 text-right"
+                  >
+                    Amount:
+                  </label>
+                  <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    min={1}
+                    value={selectedToken === 'ERC1155' ? amount : '1'}
+                    onChange={handleAmountChange}
+                    className={`block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none ${
+                      selectedToken === 'ERC721'
+                        ? 'bg-slate-100'
+                        : 'focus:ring-blue-500' && 'focus:border-blue-500'
+                    }  sm:text-sm`}
+                    disabled={selectedToken === 'ERC721' ? true : false}
+                  />
+                </div>
+
                 {amountError && (
                   <p className="text-red-500 text-sm">{amountError}</p>
                 )}
