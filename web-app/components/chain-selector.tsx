@@ -67,7 +67,7 @@ function ChainSelector() {
     isConnected && (
       <div className="relative inline-block">
         <div
-          className="inline-flex w-40 items-center cursor-pointer rounded-md  btn-sm text-gray-700 font-medium bg-white hover:bg-slate-100 border-gray-200 gap-3"
+          className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md  btn-sm text-gray-700 font-medium bg-white hover:bg-slate-100 border-gray-300 shadow-none gap-3"
           onClick={toggleDropdown}
         >
           <span>{currentChain.name}</span>
@@ -77,31 +77,32 @@ function ChainSelector() {
             className="w-5 h-5"
           />
         </div>
-
-        {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg py-1">
-            {blockchains.map((blockchain) => {
-              return (
-                <>
-                  <button
-                    onClick={async () => {
-                      await changeChain(blockchain.id);
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 flex gap-3"
-                  >
-                    <Image
-                      src={blockchain.logo}
-                      alt={`${blockchain.name} Logo`}
-                      className="w-6 h-6 text-center"
-                    />
-                    {blockchain.name}
-                    <ToastContainer />
-                  </button>
-                </>
-              );
-            })}
-          </div>
-        )}
+        <div className={` ${dropdownOpen ? 'h-64' : ''} max-2xl md:h-auto`}>
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg py-1">
+              {blockchains.map((blockchain) => {
+                return (
+                  <>
+                    <button
+                      onClick={async () => {
+                        await changeChain(blockchain.id);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 flex gap-3"
+                    >
+                      <Image
+                        src={blockchain.logo}
+                        alt={`${blockchain.name} Logo`}
+                        className="w-6 h-6 text-center"
+                      />
+                      {blockchain.name}
+                      <ToastContainer />
+                    </button>
+                  </>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
     )
   );
