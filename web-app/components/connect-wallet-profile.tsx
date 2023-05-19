@@ -39,7 +39,7 @@ function ConnectWalletProfile() {
     return (
       <div className="relative inline-block">
         <div
-          className="inline-flex items-center cursor-pointer btn-sm text-gray-700 h-10  font-medium bg-white hover:bg-slate-100 rounded-md ml-3 border-gray-300 shadow-none"
+          className="inline-flex items-center cursor-pointer btn-sm text-gray-700 h-10  font-medium bg-white hover:bg-gray-50 rounded-md ml-3 border-gray-300 shadow-none"
           onClick={toggleDropdown}
         >
           <span>{shortAddress(address)}</span>
@@ -79,7 +79,7 @@ function ConnectWalletProfile() {
     <Link
       href="#"
       onClick={setConnection}
-      className="btn-sm text-gray-700  font-medium bg-white hover:bg-slate-100 ml-3 rounded-md border-gray-300 shadow-none"
+      className="btn-sm text-gray-700  font-medium bg-white hover:bg-gray-50 ml-3 rounded-md border-gray-300 shadow-none"
     >
       <Image
         src={WalletImage}

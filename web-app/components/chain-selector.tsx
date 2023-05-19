@@ -67,7 +67,7 @@ function ChainSelector() {
     isConnected && (
       <div className="relative inline-block">
         <div
-          className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md  btn-sm text-gray-700 font-medium bg-white hover:bg-slate-100 border-gray-300 shadow-none gap-3"
+          className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md  btn-sm text-gray-700 font-medium bg-white hover:bg-gray-50 border-gray-300 shadow-none gap-3"
           onClick={toggleDropdown}
         >
           <span>{currentChain.name}</span>
@@ -87,7 +87,7 @@ function ChainSelector() {
                       onClick={async () => {
                         await changeChain(blockchain.id);
                       }}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 flex gap-3"
+                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex gap-3"
                     >
                       <Image
                         src={blockchain.logo}
