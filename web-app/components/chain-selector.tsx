@@ -14,7 +14,7 @@ function ChainSelector() {
     name: string;
     logo: any;
   }
-  const [chainNotFound, setChainNotFound] = useState(false);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentChain, setCurrentChain] = useState<MyObject>({
     name: "",
@@ -43,27 +43,26 @@ function ChainSelector() {
   const changeChain = async (chainId: any) => {
     try {
       const network = await switchNetwork({ chainId });
-
       setChain(network.id);
-      setChainNotFound(false);
     } catch (error) {
-      setChainNotFound(true);
+      notify(chainId);
       console.log("chain not found");
     }
   };
-  const notify = (chainName: any) => {
+  const notify = (chainId: any) => {
+    const tempBlockchain = blockchains.filter((blockchain) => {
+      return blockchain.id == chainId;
+    });
+    console.log(tempBlockchain);
+
     toast.error(
-      `${chainName} is not configured in your wallet, please add it to your metamask or any wallet you are using.`,
+      `${tempBlockchain[0].name} is not configured in your wallet, please add it to your metamask or any wallet you are using.`,
       {
         position: toast.POSITION.BOTTOM_LEFT,
       }
     );
   };
-  const setChainName = async (chainName: any) => {
-    if (chainNotFound) {
-      notify(chainName);
-    }
-  };
+
   return (
     isConnected && (
       <div className="relative inline-block">
@@ -87,7 +86,6 @@ function ChainSelector() {
                   <button
                     onClick={async () => {
                       await changeChain(blockchain.id);
-                      await setChainName(blockchain.name);
                     }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 flex gap-3"
                   >

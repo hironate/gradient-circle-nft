@@ -113,10 +113,10 @@ export default function MobileMenu() {
                   />
                 </svg>
               </Link> */}
-              <ChainSelector></ChainSelector>
+              <ConnectWalletProfile></ConnectWalletProfile>
             </li>
             <li className="flex justify-center">
-              <ConnectWalletProfile></ConnectWalletProfile>
+              <ChainSelector></ChainSelector>
             </li>
           </ul>
         </Transition>
