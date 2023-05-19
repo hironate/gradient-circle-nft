@@ -6,7 +6,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import { toast } from 'react-toastify';
 import { contractAddresses721 } from '@/utils/constants';
 import ERC721Service from '../app/services/chain/ERC721Service';
-import NFTFaucetERC721ABI from '../../nft-faucet-smart-contracts/publish/abis/NFTFaucetERC721.json';
+import NFTFaucetERC721ABI from '../../smart-contracts/publish/abis/NFTFaucetERC721.json';
 
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
