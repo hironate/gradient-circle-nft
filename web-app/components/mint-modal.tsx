@@ -15,7 +15,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
 
   const [selectedChain, setSelectedChain] = useState('');
   const [selectedToken, setSelectedToken] = useState('ERC721');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('1');
   const [chainError, setChainError] = useState('');
   const [amountError, setAmountError] = useState('');
 
@@ -172,10 +172,15 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                     type="number"
                     id="amount"
                     name="amount"
-                    value={selectedToken === 'ERC1155' ? amount : 1}
+                    min={1}
+                    value={selectedToken === 'ERC1155' ? amount : '1'}
                     onChange={handleAmountChange}
-                    className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    readOnly={selectedToken === 'ERC721' ? true : false}
+                    className={`block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none ${
+                      selectedToken === 'ERC721'
+                        ? 'bg-slate-100'
+                        : 'focus:ring-blue-500' && 'focus:border-blue-500'
+                    }  sm:text-sm`}
+                    disabled={selectedToken === 'ERC721' ? true : false}
                   />
                 </div>
 
