@@ -1,12 +1,12 @@
 declare var window: any;
-import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
-import Image from "next/image";
-import { getNetwork } from "@wagmi/core";
-import { blockchains } from "../utils/constants";
-import { switchNetwork } from "@wagmi/core";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
+import Image from 'next/image';
+import { getNetwork } from '@wagmi/core';
+import { blockchains } from '../utils/constants';
+import { switchNetwork } from '@wagmi/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function ChainSelector() {
   const { isConnected } = useAccount();
 
@@ -17,8 +17,8 @@ function ChainSelector() {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentChain, setCurrentChain] = useState<MyObject>({
-    name: "",
-    logo: "",
+    name: '',
+    logo: '',
   });
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function ChainSelector() {
       setChain(network.id);
     } catch (error) {
       notify(chainId);
-      console.log("chain not found");
+      console.log('chain not found');
     }
   };
   const notify = (chainId: any) => {
@@ -59,7 +59,7 @@ function ChainSelector() {
       `${tempBlockchain[0].name} is not configured in your wallet, please add it to your metamask or any wallet you are using.`,
       {
         position: toast.POSITION.BOTTOM_LEFT,
-      }
+      },
     );
   };
 

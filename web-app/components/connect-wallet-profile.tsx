@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import Link from "next/link";
-import AvatarImage from "@/public/avatar.png";
-import WalletImage from "@/public/wallet.png";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import Link from 'next/link';
+import AvatarImage from '@/public/avatar.png';
+import WalletImage from '@/public/wallet.png';
+import Image from 'next/image';
 
 function ConnectWalletProfile() {
   useEffect(() => {
-    if (localStorage.getItem("isWalletConnected") === "true") setConnection();
+    if (localStorage.getItem('isWalletConnected') === 'true') setConnection();
   }, []);
 
   const { address, isConnected } = useAccount();
@@ -20,8 +20,8 @@ function ConnectWalletProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const shortAddress = (address: any) => {
-    if (!address) return "";
-    return address.slice(0, 6) + "..." + address.slice(-4);
+    if (!address) return '';
+    return address.slice(0, 6) + '...' + address.slice(-4);
   };
 
   const toggleDropdown = () => {
@@ -31,7 +31,7 @@ function ConnectWalletProfile() {
   const setConnection = () => {
     try {
       connect();
-      localStorage.setItem("isWalletConnected", "true");
+      localStorage.setItem('isWalletConnected', 'true');
     } catch (error) {}
   };
 
@@ -60,7 +60,7 @@ function ConnectWalletProfile() {
               <button
                 onClick={() => {
                   disconnect();
-                  localStorage.setItem("isWalletConnected", "false");
+                  localStorage.setItem('isWalletConnected', 'false');
                 }}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >

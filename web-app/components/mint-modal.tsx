@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
 const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const chainOptions = [
-    { value: "goerli", label: "Goerli" },
-    { value: "ethereum", label: "Ethereum" },
-    { value: "sepolia", label: "Sepolia" },
-    { value: "polygon", label: "Polygon" },
-    { value: "polygonMumbai", label: "Polygon Mumbai" },
-    { value: "bscMainnet", label: "BSC Mainnet" },
-    { value: "bscTestnet", label: "BSC Testnet" },
+    { value: 'goerli', label: 'Goerli' },
+    { value: 'ethereum', label: 'Ethereum' },
+    { value: 'sepolia', label: 'Sepolia' },
+    { value: 'polygon', label: 'Polygon' },
+    { value: 'polygonMumbai', label: 'Polygon Mumbai' },
+    { value: 'bscMainnet', label: 'BSC Mainnet' },
+    { value: 'bscTestnet', label: 'BSC Testnet' },
   ];
 
-  const [selectedChain, setSelectedChain] = useState("");
-  const [selectedToken, setSelectedToken] = useState("ERC721");
-  const [amount, setAmount] = useState("");
-  const [chainError, setChainError] = useState("");
-  const [amountError, setAmountError] = useState("");
+  const [selectedChain, setSelectedChain] = useState('');
+  const [selectedToken, setSelectedToken] = useState('ERC721');
+  const [amount, setAmount] = useState('');
+  const [chainError, setChainError] = useState('');
+  const [amountError, setAmountError] = useState('');
 
   const toggleModal = () => {
     onClose();
@@ -25,7 +25,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
 
   const handleChainChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedChain(event.target.value);
-    setChainError("");
+    setChainError('');
   };
 
   const handleTokenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,27 +34,27 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.target.value);
-    setAmountError("");
+    setAmountError('');
   };
 
   const handleMint = () => {
     let isValid = true;
 
     if (!selectedChain) {
-      setChainError("Please select a chain");
+      setChainError('Please select a chain');
       isValid = false;
     }
 
-    if (selectedToken === "ERC1155" && !amount) {
-      setAmountError("Please enter an amount");
+    if (selectedToken === 'ERC1155' && !amount) {
+      setAmountError('Please enter an amount');
       isValid = false;
     }
 
     if (isValid) {
-      console.log("Selected chain:", selectedChain);
-      console.log("Selected token:", selectedToken);
-      if (selectedToken === "ERC1155") {
-        console.log("Amount:", amount);
+      console.log('Selected chain:', selectedChain);
+      console.log('Selected token:', selectedToken);
+      if (selectedToken === 'ERC1155') {
+        console.log('Amount:', amount);
       }
     }
   };
@@ -141,7 +141,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                         type="radio"
                         name="token"
                         value="ERC721"
-                        checked={selectedToken === "ERC721"}
+                        checked={selectedToken === 'ERC721'}
                         onChange={handleTokenChange}
                         className="form-radio h-5 w-5 text-green-600"
                       />
@@ -152,7 +152,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                         type="radio"
                         name="token"
                         value="ERC1155"
-                        checked={selectedToken === "ERC1155"}
+                        checked={selectedToken === 'ERC1155'}
                         onChange={handleTokenChange}
                         className="form-radio h-5 w-5 text-green-600"
                       />
@@ -161,7 +161,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                   </div>
                 </div>
 
-                {selectedToken === "ERC1155" && (
+                {selectedToken === 'ERC1155' && (
                   <div className="flex items-center space-x-4">
                     <label
                       htmlFor="amount"
