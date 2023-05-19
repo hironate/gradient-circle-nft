@@ -1,62 +1,44 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
+import { QuantitySelector } from './quantity-selector';
+import { useAccount, useConnect } from 'wagmi';
+import { getNetwork } from '@wagmi/core';
+import { InjectedConnector } from 'wagmi/connectors/injected';
 
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
 const MintModal = ({ isOpen, onClose }: MintModalProps) => {
-  const chainOptions = [
-    { value: 'goerli', label: 'Goerli' },
-    { value: 'ethereum', label: 'Ethereum' },
-    { value: 'sepolia', label: 'Sepolia' },
-    { value: 'polygon', label: 'Polygon' },
-    { value: 'polygonMumbai', label: 'Polygon Mumbai' },
-    { value: 'bscMainnet', label: 'BSC Mainnet' },
-    { value: 'bscTestnet', label: 'BSC Testnet' },
-  ];
-
-  const [selectedChain, setSelectedChain] = useState('');
   const [selectedToken, setSelectedToken] = useState('ERC721');
-  const [amount, setAmount] = useState('1');
-  const [chainError, setChainError] = useState('');
-  const [amountError, setAmountError] = useState('');
+  const [amount, setAmount] = useState(1);
 
   const toggleModal = () => {
     onClose();
   };
 
-  const handleChainChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedChain(event.target.value);
-    setChainError('');
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const setConnection = () => {
+    try {
+      if (!isConnected) {
+        connect();
+        localStorage.setItem('isWalletConnected', 'true');
+      }
+    } catch (error) {}
   };
 
   const handleTokenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedToken(event.target.value);
   };
 
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.target.value);
-    setAmountError('');
+  const handleAmountChange = (amount: SetStateAction<number>) => {
+    setAmount(amount);
   };
 
   const handleMint = () => {
-    let isValid = true;
-
-    if (!selectedChain) {
-      setChainError('Please select a chain');
-      isValid = false;
-    }
-
-    if (selectedToken === 'ERC1155' && !amount) {
-      setAmountError('Please enter an amount');
-      isValid = false;
-    }
-
-    if (isValid) {
-      console.log('Selected chain:', selectedChain);
-      console.log('Selected token:', selectedToken);
-      if (selectedToken === 'ERC1155') {
-        console.log('Amount:', amount);
-      }
-    }
+    setConnection();
+    let chainId = getNetwork().chain?.id || 1;
+    console.log({ selectedToken, amount, chainId });
   };
 
   return (
@@ -96,41 +78,6 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
               </div>
 
               <div className="p-6 space-y-4">
-                {/* <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="chain"
-                    className="font-medium text-gray-700 text-right"
-                  >
-                    Chain:
-                  </label>
-                  <select
-                    id="chain"
-                    name="chain"
-                    value={selectedChain}
-                    onChange={handleChainChange}
-                    className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  >
-                    <option
-                      value=""
-                      className="bg-white rounded-md shadow-lg text-gray-700 text-md my-2 hover:bg-slate-100"
-                    >
-                      Select a chain
-                    </option>
-                    {chainOptions.map((option) => (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                        className="bg-white rounded-md shadow-lg text-gray-700 text-md my-2 hover:bg-slate-100"
-                      >
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div> */}
-                {chainError && (
-                  <p className="text-red-500 text-sm">{chainError}</p>
-                )}
-
                 <div className="flex items-center space-x-4">
                   <label className="font-medium text-gray-700 text-right mr-4">
                     Token:
@@ -162,31 +109,15 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <label
-                    htmlFor="amount"
-                    className="font-medium text-gray-700 text-right"
-                  >
-                    Amount:
-                  </label>
-                  <input
-                    type="number"
-                    id="amount"
-                    name="amount"
-                    min={1}
-                    value={selectedToken === 'ERC1155' ? amount : '1'}
-                    onChange={handleAmountChange}
-                    className={`block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none ${
-                      selectedToken === 'ERC721'
-                        ? 'bg-slate-100'
-                        : 'focus:ring-blue-500' && 'focus:border-blue-500'
-                    }  sm:text-sm`}
-                    disabled={selectedToken === 'ERC721' ? true : false}
+                  <QuantitySelector
+                    quantity={amount}
+                    onQuantityChange={(value) => handleAmountChange(value)}
+                    minusButtonDisabled={amount === 1}
+                    plusButtonDisabled={
+                      amount === 10000 || selectedToken === 'ERC721'
+                    }
                   />
                 </div>
-
-                {amountError && (
-                  <p className="text-red-500 text-sm">{amountError}</p>
-                )}
               </div>
 
               <div className="flex items-center p-6 space-x-2 border-t">

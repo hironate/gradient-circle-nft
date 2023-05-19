@@ -46,7 +46,7 @@ function ChainSelector() {
       setChain(network.id);
     } catch (error) {
       notify(chainId);
-      console.log('chain not found');
+      console.log('chain not found', error);
     }
   };
   const notify = (chainId: any) => {
@@ -64,47 +64,49 @@ function ChainSelector() {
   };
 
   return (
-    isConnected && (
-      <div className="relative inline-block">
-        <div
-          className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md  btn-sm text-gray-700 font-medium bg-white hover:bg-gray-50 border-gray-300 shadow-none gap-3"
-          onClick={toggleDropdown}
-        >
-          <span>{currentChain.name}</span>
-          <Image
-            src={currentChain.logo}
-            alt={`${currentChain.name} Logo`}
-            className="w-5 h-5"
-          />
+    <>
+      {isConnected && (
+        <div className="relative inline-block">
+          <div
+            className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md btn-sm text-gray-700 font-medium bg-white hover:bg-gray-50 border-gray-300 shadow-none gap-3"
+            onClick={toggleDropdown}
+          >
+            <Image
+              src={currentChain.logo}
+              alt={`${currentChain.name} Logo`}
+              className="w-5 h-5"
+            />
+            <span>{currentChain.name}</span>
+          </div>
+          <div className={` ${dropdownOpen ? 'h-64' : ''} max-2xl md:h-auto`}>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg py-1">
+                {blockchains.map((blockchain) => {
+                  return (
+                    <>
+                      <button
+                        onClick={async () => {
+                          await changeChain(blockchain.id);
+                        }}
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex gap-3"
+                      >
+                        <Image
+                          src={blockchain.logo}
+                          alt={`${blockchain.name} Logo`}
+                          className="w-6 h-6 text-center"
+                        />
+                        {blockchain.name}
+                        <ToastContainer />
+                      </button>
+                    </>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
-        <div className={` ${dropdownOpen ? 'h-64' : ''} max-2xl md:h-auto`}>
-          {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg py-1">
-              {blockchains.map((blockchain) => {
-                return (
-                  <>
-                    <button
-                      onClick={async () => {
-                        await changeChain(blockchain.id);
-                      }}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex gap-3"
-                    >
-                      <Image
-                        src={blockchain.logo}
-                        alt={`${blockchain.name} Logo`}
-                        className="w-6 h-6 text-center"
-                      />
-                      {blockchain.name}
-                      <ToastContainer />
-                    </button>
-                  </>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-    )
+      )}
+    </>
   );
 }
 
