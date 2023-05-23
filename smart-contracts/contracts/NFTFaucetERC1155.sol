@@ -9,11 +9,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract NFTFaucetERC1155 is ERC1155, Ownable {
     uint256 private _currentTokenId = 1;
     uint256 public mintingFee = 0 ether;
+    uint256 public maxSupply = 0;
 
     event Mint(address indexed to, uint256 indexed tokenId, uint256 amount);
 
     /// @notice Contract constructor that sets the initial token URI.
-    constructor() ERC1155("https://example.com/api/token/{id}.json") {}
+    constructor()
+        ERC1155(
+            "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/{id}.json"
+        )
+    {
+        maxSupply = 10000;
+    }
 
     /// @notice Allows users to mint NFTs by paying the current minting fee.
     /// @param amount The number of tokens to mint.
@@ -21,6 +28,10 @@ contract NFTFaucetERC1155 is ERC1155, Ownable {
         require(
             msg.value >= mintingFee,
             "NFTFaucetERC1155: Insufficient minting fee"
+        );
+        require(
+            _currentTokenId < maxSupply,
+            "NFTFaucetERC1155: Max Supply Reached"
         );
         _mint(msg.sender, _currentTokenId, amount, "");
         emit Mint(msg.sender, _currentTokenId, amount);

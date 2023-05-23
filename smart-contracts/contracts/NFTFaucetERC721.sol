@@ -18,6 +18,7 @@ contract NFTFaucetERC721 is ERC721, Ownable {
 
     string private _currentBaseURI;
     uint256 public mintingFee = 0 ether;
+    uint256 public maxSupply = 0;
 
     event Mint(address indexed to, uint256 indexed tokenId);
 
@@ -25,6 +26,7 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     constructor() ERC721("NFTFaucet", "FCT") {
         _currentBaseURI = "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/";
         _tokenIdCounter.increment(); // Start the token ID counter from 1
+        maxSupply = 10000;
     }
 
     /// @notice Returns the current base URI
@@ -63,7 +65,9 @@ contract NFTFaucetERC721 is ERC721, Ownable {
             msg.value >= mintingFee,
             "NFTFaucetERC721: Insufficient minting fee"
         );
+
         uint256 tokenId = _tokenIdCounter.current();
+        require(tokenId < maxSupply, "NFTFaucetERC721: Max Supply Reached");
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId);
         emit Mint(msg.sender, tokenId);

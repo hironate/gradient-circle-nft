@@ -18,7 +18,7 @@ describe('NFTFaucetERC1155', function () {
   describe('Deployment', function () {
     it('Should set the correct URI', async function () {
       expect(await nftFaucetERC1155.uri(1)).to.equal(
-        'https://example.com/api/token/{id}.json',
+        'ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/{id}.json',
       );
     });
 
@@ -46,9 +46,11 @@ describe('NFTFaucetERC1155', function () {
     it('Should set a new URI', async function () {
       await nftFaucetERC1155
         .connect(owner)
-        .setURI('https://newexample.com/api/token/{id}.json');
+        .setURI(
+          'ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/{id}.json',
+        );
       expect(await nftFaucetERC1155.uri(1)).to.equal(
-        'https://newexample.com/api/token/{id}.json',
+        'ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/{id}.json',
       );
     });
 
