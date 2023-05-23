@@ -1,6 +1,7 @@
 require('@nomicfoundation/hardhat-toolbox');
 require('dotenv').config();
 require('./task/nft-faucet-erc-721');
+require('./task/nft-faucet-erc-1155');
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 if (!PRIVATE_KEY) {

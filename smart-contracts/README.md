@@ -40,7 +40,8 @@ cp .env.example .env
 To deploy the NFTFaucetERC721 contract, run the following command:
 
 ```
-npx hardhat deploy:contract-721
+npx hardhat deploy:contract-721 --network sepolia
+npx hardhat deploy:contract-1155 --network sepolia
 ```
 
 This will deploy the contract to the network specified in the `.env` file.
@@ -50,7 +51,8 @@ This will deploy the contract to the network specified in the `.env` file.
 To verify the NFTFaucetERC721 contract on Etherscan/Polygonscan/Bscscan, run the following command:
 
 ```
-npx hardhat verify:contract-721
+npx hardhat verify:contract-721 --network sepolia
+npx hardhat verify:contract-1155 --network sepolia
 ```
 
 This will verify the contract on the corresponding network and update the contract's source code on the respective network's explorer.
@@ -60,7 +62,8 @@ This will verify the contract on the corresponding network and update the contra
 To export the NFTFaucetERC721 contract ABI to a JSON file, run the following command:
 
 ```
-npx hardhat export:abi-721
+npx hardhat export:abi-721 --network sepolia
+npx hardhat export:abi-1155 --network sepolia
 ```
 
 This will generate a `NFTFaucetERC721.json` file containing the contract's ABI in the specified output folder.
