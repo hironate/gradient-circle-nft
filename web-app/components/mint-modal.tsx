@@ -4,9 +4,11 @@ import { useAccount, useConnect, useSigner } from 'wagmi';
 import { getNetwork } from '@wagmi/core';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { toast } from 'react-toastify';
-import { contractAddresses721 } from '@/utils/constants';
+import { contractAddresses721, contractAddresses1155 } from '@/utils/constants';
 import ERC721Service from '../app/services/chain/ERC721Service';
+import ERC1155Service from '@/app/services/chain/ERC1155Service';
 import NFTFaucetERC721ABI from '../../smart-contracts/publish/abis/NFTFaucetERC721.json';
+import NFTFaucetERC1155ABI from '../../smart-contracts/publish/abis/NFTFaucetERC1155.json';
 
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
@@ -43,21 +45,34 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const handleMint = async () => {
     setConnection();
     let chainId: number = getNetwork().chain?.id || 1;
-    const contractAddress: string = contractAddresses721[chainId];
-
-    console.log({ selectedToken, amount, chainId });
-    console.log({ chainId });
-    const contractInstance = new ERC721Service(
-      signer,
-      chainId,
-      contractAddress,
-      NFTFaucetERC721ABI,
-    );
-
-    const txn = await contractInstance.mint();
-    console.log(txn);
-    txn.wait(1);
-    toast.success('NFT Minted...');
+    if (selectedToken === 'ERC71') {
+      const contractAddress: string = contractAddresses721[chainId];
+      console.log({ selectedToken, amount, chainId });
+      console.log({ chainId });
+      const contractInstance = new ERC721Service(
+        signer,
+        chainId,
+        contractAddress,
+        NFTFaucetERC721ABI,
+      );
+      const txn = await contractInstance.mint();
+      console.log(txn);
+      txn.wait(1);
+      toast.success('NFT Minted...');
+    } else {
+      const contractAddress: string = contractAddresses1155[chainId];
+      console.log({ selectedToken, amount, chainId });
+      console.log({ chainId });
+      const contractInstance = new ERC1155Service(
+        signer,
+        chainId,
+        contractAddress,
+        NFTFaucetERC1155ABI,
+      );
+      const txn = await contractInstance.mint(amount);
+      txn.wait();
+      toast.success('ERC1155 Tokens Minted...');
+    }
   };
 
   return (
