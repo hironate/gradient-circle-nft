@@ -16,7 +16,7 @@ contract NFTFaucetERC1155 is ERC1155, Ownable {
     /// @notice Contract constructor that sets the initial token URI.
     constructor()
         ERC1155(
-            "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/{id}.json"
+            "ipfs://bafybeiaixnmd3z54vvcovlt2yhxnvd43jhukfd2ixbqu3d4fp5awwcsqa4/{id}.json"
         )
     {
         maxSupply = 10000;

@@ -24,7 +24,7 @@ contract NFTFaucetERC721 is ERC721, Ownable {
 
     /// @notice Constructor initializes the ERC721 contract with its name and symbol
     constructor() ERC721("NFTFaucet", "FCT") {
-        _currentBaseURI = "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/";
+        _currentBaseURI = "ipfs://bafybeiaixnmd3z54vvcovlt2yhxnvd43jhukfd2ixbqu3d4fp5awwcsqa4/";
         _tokenIdCounter.increment(); // Start the token ID counter from 1
         maxSupply = 10000;
     }
