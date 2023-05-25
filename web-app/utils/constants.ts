@@ -24,7 +24,7 @@ export const blockchains = [
   },
   {
     ...sepolia,
-    name: 'Seploia',
+    name: 'Sepolia',
     logo: EthereumLogo,
   },
   {

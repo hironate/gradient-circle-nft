@@ -1,5 +1,5 @@
 declare var window: any;
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAccount } from 'wagmi';
 import Image from 'next/image';
 import { getNetwork } from '@wagmi/core';
@@ -62,12 +62,27 @@ function ChainSelector() {
       },
     );
   };
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function handleClick(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    window.addEventListener('click', handleClick);
 
+    return () => window.removeEventListener('click', handleClick);
+  }, [dropdownOpen]);
   return (
     <>
       {isConnected && (
         <div className="relative inline-block">
           <div
+            ref={dropdownRef}
             className="inline-flex ml-3 w-40 items-center cursor-pointer rounded-md btn-sm text-gray-700 font-medium bg-white hover:bg-gray-50 border-gray-300 shadow-none gap-3"
             onClick={toggleDropdown}
           >
@@ -80,7 +95,7 @@ function ChainSelector() {
           </div>
           <div className={` ${dropdownOpen ? 'h-64' : ''} max-2xl md:h-auto`}>
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg py-1">
+              <div className="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg shadow-gray-200 py-1">
                 {blockchains.map((blockchain) => {
                   return (
                     <>
@@ -88,7 +103,7 @@ function ChainSelector() {
                         onClick={async () => {
                           await changeChain(blockchain.id);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex gap-3"
+                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex gap-3"
                       >
                         <Image
                           src={blockchain.logo}
