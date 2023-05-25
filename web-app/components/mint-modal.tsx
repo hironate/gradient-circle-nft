@@ -47,8 +47,6 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
     let chainId: number = getNetwork().chain?.id || 1;
     if (selectedToken === 'ERC71') {
       const contractAddress: string = contractAddresses721[chainId];
-      console.log({ selectedToken, amount, chainId });
-      console.log({ chainId });
       const contractInstance = new ERC721Service(
         signer,
         chainId,
@@ -56,13 +54,10 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
         NFTFaucetERC721ABI,
       );
       const txn = await contractInstance.mint();
-      console.log(txn);
       txn.wait(1);
       toast.success('NFT Minted...');
     } else {
       const contractAddress: string = contractAddresses1155[chainId];
-      console.log({ selectedToken, amount, chainId });
-      console.log({ chainId });
       const contractInstance = new ERC1155Service(
         signer,
         chainId,
