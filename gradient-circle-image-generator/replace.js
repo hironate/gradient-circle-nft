@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 const jsonDir = path.join(__dirname, 'json');
-const newBaseUri = 'IPFS_HASH';
+const newBaseUri =
+  'bafybeicbk7u2fit4caed2utefv4otpblnntiwgic3i7azwvbf6wipiyaja';
 
 fs.readdir(jsonDir, (err, files) => {
   if (err) {

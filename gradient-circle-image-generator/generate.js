@@ -52,9 +52,9 @@ function createGradientCircle(index, width, height, baseUri) {
 
   // Create metadata
   const metadata = {
-    description: `This is NFT Circle #${index}.`,
+    description: `This is Gradient Circle #${index}.`,
     image: `ipfs://${baseUri}/${index}.png`,
-    name: `Nft Circle #${index}`,
+    name: `Gradient Circle #${index}`,
     attributes: [
       {
         trait_type: 'Number Of Colors',
@@ -81,7 +81,7 @@ function createGradientCircle(index, width, height, baseUri) {
 
 const width = 512;
 const height = 512;
-const numberOfImages = 100000;
+const numberOfImages = 10000;
 const baseUri = '{BASE_URI}';
 
 for (let i = 1; i <= numberOfImages; i++) {
