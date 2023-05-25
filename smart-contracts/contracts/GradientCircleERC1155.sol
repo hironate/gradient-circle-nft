@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// @title NFT Faucet ERC-1155
 /// @notice A simple ERC-1155 contract that allows users to mint NFTs by paying a minting fee.
-contract NFTFaucetERC1155 is ERC1155, Ownable {
+contract GradientCircleERC1155 is ERC1155, Ownable {
     uint256 private _currentTokenId = 1;
     uint256 public mintingFee = 0 ether;
     uint256 public maxSupply = 0;
@@ -27,11 +27,11 @@ contract NFTFaucetERC1155 is ERC1155, Ownable {
     function mint(uint256 amount) public payable {
         require(
             msg.value >= mintingFee,
-            "NFTFaucetERC1155: Insufficient minting fee"
+            "GradientCircleERC1155: Insufficient minting fee"
         );
         require(
             _currentTokenId < maxSupply,
-            "NFTFaucetERC1155: Max Supply Reached"
+            "GradientCircleERC1155: Max Supply Reached"
         );
         _mint(msg.sender, _currentTokenId, amount, "");
         emit Mint(msg.sender, _currentTokenId, amount);

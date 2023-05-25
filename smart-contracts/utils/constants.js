@@ -1,6 +1,6 @@
 const CONTRACT_NAMES = {
-  NFTFaucetERC721: 'NFTFaucetERC721',
-  NFTFaucetERC1155: 'NFTFaucetERC1155',
+  GradientCircleERC721: 'GradientCircleERC721',
+  GradientCircleERC1155: 'GradientCircleERC1155',
 };
 
 module.exports = {
