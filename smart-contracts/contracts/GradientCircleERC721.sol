@@ -6,11 +6,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-/// @title NFTFaucetERC721
+/// @title GradientCircleERC721
 /// @author Hiren Kavad
 /// @notice A simple NFT faucet that mints tokens with a specified minting fee
 /// @custom:security-contact hello@hirenkavad.com
-contract NFTFaucetERC721 is ERC721, Ownable {
+contract GradientCircleERC721 is ERC721, Ownable {
     using Counters for Counters.Counter;
     using Strings for uint256;
 
@@ -23,8 +23,8 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     event Mint(address indexed to, uint256 indexed tokenId);
 
     /// @notice Constructor initializes the ERC721 contract with its name and symbol
-    constructor() ERC721("NFTFaucet", "FCT") {
-        _currentBaseURI = "ipfs://bafybeihlwybp2ku6mj37aaolcfxfdvdgw34hq52owquwu7lwqgi4yyfmpa/";
+    constructor() ERC721("Gradient Circle", "GC") {
+        _currentBaseURI = "ipfs://bafybeiaixnmd3z54vvcovlt2yhxnvd43jhukfd2ixbqu3d4fp5awwcsqa4/";
         _tokenIdCounter.increment(); // Start the token ID counter from 1
         maxSupply = 10000;
     }
@@ -63,11 +63,14 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     function mint() public payable {
         require(
             msg.value >= mintingFee,
-            "NFTFaucetERC721: Insufficient minting fee"
+            "GradientCircleERC721: Insufficient minting fee"
         );
 
         uint256 tokenId = _tokenIdCounter.current();
-        require(tokenId < maxSupply, "NFTFaucetERC721: Max Supply Reached");
+        require(
+            tokenId < maxSupply,
+            "GradientCircleERC721: Max Supply Reached"
+        );
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId);
         emit Mint(msg.sender, tokenId);
@@ -82,7 +85,7 @@ contract NFTFaucetERC721 is ERC721, Ownable {
     /// @notice Withdraws funds from the contract to the owner's address
     function withdraw() external onlyOwner {
         uint256 balance = address(this).balance;
-        require(balance > 0, "NFTFaucetERC721: No funds to withdraw");
+        require(balance > 0, "GradientCircleERC721: No funds to withdraw");
         payable(owner()).transfer(balance);
     }
 }
