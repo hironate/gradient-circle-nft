@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Home - Simple',
-  description: 'Page description',
+  title: 'Gradient Circle NFTs',
+  description: 'Mint Free NFTs on Testnets and Mainnet, Free NFT Faucet',
 };
 
 import Hero from '@/components/hero';

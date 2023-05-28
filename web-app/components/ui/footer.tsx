@@ -16,7 +16,7 @@ export default function Footer() {
                 href="#0"
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
               >
-                Gradient Circle NFT Faucet
+                Gradient Circle NFTs
               </a>{' '}
             </div>
           </div>
@@ -44,7 +44,7 @@ export default function Footer() {
             </li>
             <li className="ml-4">
               <a
-                href="https://github.com/hironate"
+                href="https://github.com/hironate/gradient-circle-nft"
                 target="_blank"
                 className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
                 aria-label="Github"

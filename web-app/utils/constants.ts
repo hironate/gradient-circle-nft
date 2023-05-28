@@ -27,21 +27,21 @@ export const blockchains = [
     name: 'Sepolia',
     logo: EthereumLogo,
   },
-  {
-    ...polygon,
-    name: 'Polygon',
-    logo: PolygonLogo,
-  },
+  // {
+  //   ...polygon,
+  //   name: 'Polygon',
+  //   logo: PolygonLogo,
+  // },
   {
     ...polygonMumbai,
     name: 'Mumbai',
     logo: PolygonLogo,
   },
-  {
-    ...bsc,
-    name: 'BSC',
-    logo: BscLogo,
-  },
+  // {
+  //   ...bsc,
+  //   name: 'BSC',
+  //   logo: BscLogo,
+  // },
   {
     ...bscTestnet,
     name: 'Bsc Testnet',
