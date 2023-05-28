@@ -299,7 +299,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                     ''
                   )}
                 </div>
-                <div className="flex items-center pb-6 space-x-2 justify-center">
+                <div className="flex items-center pb-6 pt-6 space-x-2 justify-center">
                   <button
                     type="button"
                     className="text-white bg-blue-700 flex hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 justify-between "
