@@ -40,14 +40,14 @@ export default function Header() {
           <nav className="hidden md:flex md:grow">
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
-              <li>
+              {/* <li>
                 <Link
                   href="/collection"
                   className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out"
                 >
                   Gradient Circle Collection
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <ChainSelector></ChainSelector>
               </li>

@@ -74,7 +74,7 @@ export default function MobileMenu() {
           leaveTo="opacity-0"
         >
           <ul className="px-5 flex-col py-2 bg-white flex justify-between">
-            <li>
+            {/* <li>
               <Link
                 href="/my-mints"
                 className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center"
@@ -82,8 +82,8 @@ export default function MobileMenu() {
               >
                 My Mints
               </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link
                 href="/collection"
                 className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center"
@@ -91,7 +91,7 @@ export default function MobileMenu() {
               >
                 Gradient Circle Collection
               </Link>
-            </li>
+            </li> */}
             <li className="flex justify-center mb-2">
               {/* <Link
                 href="/#"
