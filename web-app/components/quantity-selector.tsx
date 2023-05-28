@@ -38,22 +38,49 @@ export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   plusButtonDisabled,
 }) => {
   return (
-    <div className="flex items-center rounded-md border border-[#D1D5DB] bg-white">
-      <Button
-        color="white"
+    <div className="w-full flex items-center rounded-md border border-[#D1D5DB] justify-center">
+      <button
         disabled={minusButtonDisabled}
+        className="px-3 py-1 bg-blue-700 text-white rounded-l"
         onClick={() => onQuantityChange(quantity - 1)}
       >
-        {' - '}
-      </Button>
-      <span className="px-2">{quantity}</span>
-      <Button
-        color="white"
+        -
+      </button>
+      <div className="flex-grow text-center px-3">{quantity}</div>
+      <button
         disabled={plusButtonDisabled}
+        className="px-3 py-1 bg-blue-700 text-white rounded-r"
         onClick={() => onQuantityChange(quantity + 1)}
       >
-        {' + '}
-      </Button>
+        +
+      </button>
     </div>
   );
 };
+
+// export const QuantitySelector: React.FC<QuantitySelectorProps> = ({
+//   quantity,
+//   onQuantityChange,
+//   minusButtonDisabled,
+//   plusButtonDisabled,
+// }) => {
+//   return (
+//     <div className="w-full flex items-center rounded-md border border-[#D1D5DB] bg-white">
+//       <Button
+//         color="white"
+//         disabled={minusButtonDisabled}
+//         onClick={() => onQuantityChange(quantity - 1)}
+//       >
+//         {' - '}
+//       </Button>
+//       <div className="flex-grow text-center px-2">{quantity}</div>
+//       <Button
+//         color="white"
+//         disabled={plusButtonDisabled}
+//         onClick={() => onQuantityChange(quantity + 1)}
+//       >
+//         {' + '}
+//       </Button>
+//     </div>
+//   );
+// };

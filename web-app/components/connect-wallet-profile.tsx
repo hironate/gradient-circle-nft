@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import Link from 'next/link';
@@ -34,10 +34,24 @@ function ConnectWalletProfile() {
       localStorage.setItem('isWalletConnected', 'true');
     } catch (error) {}
   };
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function handleClick(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    window.addEventListener('click', handleClick);
 
+    return () => window.removeEventListener('click', handleClick);
+  }, [dropdownOpen]);
   if (isConnected) {
     return (
-      <div className="relative inline-block">
+      <div className="relative inline-block" ref={dropdownRef}>
         <div
           className="inline-flex items-center cursor-pointer btn-sm text-gray-700 h-10  font-medium bg-white hover:bg-gray-50 rounded-md ml-3 border-gray-300 shadow-none"
           onClick={toggleDropdown}
@@ -48,7 +62,7 @@ function ConnectWalletProfile() {
         </div>
         <div className={` ${dropdownOpen ? 'h-28' : ''} max-2xl md:h-auto`}>
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg">
+            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg shadow-gray-200">
               <div className="py-1">
                 <Link
                   href="/my-mints"

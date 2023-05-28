@@ -51,14 +51,14 @@ export default function Hero() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Hero content */}
-        <div className="pt-32 pb-12 md:pt-40 md:pb-20">
+        <div className="pt-32 pb-12 md:pt-26 md:pb-20">
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <h1
               className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4"
               data-aos="zoom-y-out"
             >
-              Nft Faucet on any Chain{' '}
+              <div>Gradient Circle</div>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
                 Free Mint
               </span>
@@ -69,13 +69,16 @@ export default function Hero() {
                 data-aos="zoom-y-out"
                 data-aos-delay="150"
               >
-                <b>Gradient Circle</b> is a unique NFT project designed
-                specifically for developers. With the help of AI technology,
-                developers can easily mint NFTs for free on any EVM-compatible
-                blockchain, whether it's a testnet or mainnet. These NFTs can be
-                used for personal or development purposes, providing developers
-                with a convenient and accessible way to explore the world of
-                NFTs. Join Gradient Circle today and unleash your creativity!
+                <b>Gradient Circle</b> is an exceptional NFT crafted entirely
+                with the aid of AI technology. This groundbreaking project was
+                initiated with the intention of facilitating NFT minting on
+                testnets, serving as a valuable resource for developers looking
+                to expedite their application development process. By
+                eliminating the need to deploy their own testnet contracts,
+                developers can seamlessly create NFTs at no cost on any
+                EVM-compatible blockchain, be it a testnet or mainnet. "Gradient
+                Circle" empowers developers to enhance their efficiency and
+                accelerate their progress.
               </p>
               <div
                 className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center"

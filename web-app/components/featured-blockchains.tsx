@@ -10,50 +10,58 @@ export default function FeaturedBlokchains() {
     {
       logo: EthereumLogo,
       chain: 'Mainnet',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
+      etherscanLink:
+        'https://sepolia.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+      marketplaceLink: 'https://opensea.io/collection/gradient-circle',
     },
     {
       logo: EthereumLogo,
       chain: 'Sepolia',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
+      etherscanLink:
+        'https://sepolia.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+      marketplaceLink: '',
     },
     {
       logo: EthereumLogo,
       chain: 'Goerli',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
+      etherscanLink:
+        'https://goerli.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+      marketplaceLink:
+        'https://testnets.opensea.io/collection/gradient-circle-721-goerli',
     },
-    {
-      logo: PolygonLogo,
-      chain: 'Polygon',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
-    },
+    // {
+    //   logo: PolygonLogo,
+    //   chain: 'Polygon',
+    //   etherscanLink: 'https://etherscan.com',
+    //   marketplaceLink: 'https://opensea.com',
+    // },
     {
       logo: PolygonLogo,
       chain: 'Mumbai',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
+      etherscanLink:
+        'https://mumbai.polygonscan.com/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+      marketplaceLink:
+        'https://testnets.opensea.io/collection/gradient-circle-721-polygon-testnet',
     },
-    {
-      logo: BscLogo,
-      chain: 'BSC',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
-    },
+    // {
+    //   logo: BscLogo,
+    //   chain: 'BSC',
+    //   etherscanLink: 'https://etherscan.com',
+    //   marketplaceLink: 'https://opensea.com',
+    // },
     {
       logo: BscLogo,
       chain: 'Bsc Testnet',
-      etherscanLink: 'https://etherscan.com',
-      marketplaceLink: 'https://opensea.com',
+      etherscanLink:
+        'https://testnet.bscscan.com/address/0x0Cfd47C84BC6cDa59c76bE4f8B74366ABD7386ED#code',
+      marketplaceLink:
+        'https://testnets.opensea.io/collection/gradient-circle-721-bsc-testnet',
     },
     {
       logo: EthereumLogo,
       chain: 'More Coming Soon',
       etherscanLink: '#',
-      marketplaceLink: '#',
+      marketplaceLink: '',
     },
   ];
 
@@ -101,17 +109,19 @@ export default function FeaturedBlokchains() {
                   </Link>
                 </div>
                 <div className="flex items-center justify-center w-12 h-12">
-                  <Link
-                    href={item.marketplaceLink}
-                    target="_blank"
-                    className="block"
-                  >
-                    <Image
-                      src={OpenseaLogo}
-                      alt="Opensea Logo"
-                      className="w-4 h-4"
-                    />
-                  </Link>
+                  {item.marketplaceLink && (
+                    <Link
+                      href={item.marketplaceLink}
+                      target="_blank"
+                      className="block"
+                    >
+                      <Image
+                        src={OpenseaLogo}
+                        alt="Opensea Logo"
+                        className="w-4 h-4"
+                      />
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}

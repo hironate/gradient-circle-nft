@@ -14,7 +14,7 @@ interface SetApprovalForAllParams {
 class ERC1155Service extends CoreChainService {
   contract: Contract;
 
-  constructor(signer: Signer, chainId: number, address: string, abi: any) {
+  constructor(signer: any, chainId: number, address: string, abi: any) {
     super(signer, chainId);
     this.contract = new Contract(address, abi, signer);
   }
@@ -25,6 +25,10 @@ class ERC1155Service extends CoreChainService {
 
   setApprovalForAll({ operator, approved }: SetApprovalForAllParams) {
     return this.contract.setApprovalForAll(operator, approved);
+  }
+
+  mint(amount: number) {
+    return this.contract.mint(amount);
   }
 }
 
