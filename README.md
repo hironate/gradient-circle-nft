@@ -4,7 +4,7 @@ Gradient Circle is an exceptional NFT crafted entirely with the aid of AI techno
 
 # Structure
 
-This project is a monorepo that contains three sub-repositories:
+This project is a best boilerplate project for smart contract development with hardhat and smart contract interaction using ethers.js and react.js using next.js. This project is a monorepo that contains three sub-repositories:
 
 - gradient-circle-image-generator
   - For generating gradient circle NFT images.
