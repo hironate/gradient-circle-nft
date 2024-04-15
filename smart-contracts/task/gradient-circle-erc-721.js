@@ -15,6 +15,8 @@ const NETWORK_MAP = {
   11155111: 'sepolia',
   56: 'bsc', // BSC mainnet
   97: 'bscTestnet', // BSC testnet
+  8453: 'base', // Base mainnet
+  84532: 'baseSepolia', // Base testnet
 };
 
 task('deploy:contract-721', 'Deploy contract', async () => {

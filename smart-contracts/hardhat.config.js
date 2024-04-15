@@ -68,6 +68,18 @@ module.exports = {
       chainId: 56,
       gas: 'auto',
     },
+    base: {
+      url: `https://base-mainnet.g.alchemy.com/v2/${process.env.BASE_ALCHEMY_API}`,
+      accounts: [`${PRIVATE_KEY}`],
+      chainId: 8453,
+      gas: 'auto',
+    },
+    baseSepolia: {
+      url: `https://base-sepolia.g.alchemy.com/v2/${process.env.BASE_SEPOLIA_ALCHEMY_API}`,
+      accounts: [`${PRIVATE_KEY}`],
+      chainId: 84532,
+      gas: 'auto',
+    },
   },
   etherscan: {
     apiKey: {
@@ -78,6 +90,18 @@ module.exports = {
       bscTestnet: process.env.BSCSCAN_API_KEY,
       polygon: process.env.POLYSCAN_API_KEY,
       polygonMumbai: process.env.POLYSCAN_API_KEY,
+      base: process.env.BASESCAN_API_KEY,
+      baseSepolia: process.env.BASESCAN_API_KEY,
     },
+    customChains: [
+      {
+        network: 'baseSepolia',
+        chainId: 84532,
+        urls: {
+          apiURL: 'https://api-sepolia.basescan.org/api',
+          browserURL: 'https://sepolia.basescan.org/',
+        },
+      },
+    ],
   },
 };
