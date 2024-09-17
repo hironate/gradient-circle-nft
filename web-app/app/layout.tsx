@@ -6,8 +6,6 @@ import { Inter } from 'next/font/google';
 import Header from '@/components/ui/header';
 import Banner from '@/components/banner';
 
-import { WagmiConfig, createClient, configureChains } from 'wagmi';
-
 import {
   mainnet,
   sepolia,
@@ -17,29 +15,13 @@ import {
   bsc,
   bscTestnet,
 } from '@wagmi/core/chains';
+import Config from './Config';
 
-import { publicProvider } from 'wagmi/providers/public';
-
-const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, sepolia, goerli, polygon, polygonMumbai, bsc, bscTestnet],
-  [publicProvider()],
-);
-
-const client = createClient({
-  autoConnect: false,
-  provider,
-  webSocketProvider,
-});
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
-
-// export const metadata = {
-//   title: 'NFT Faucet on on Testnets',
-//   description: 'Free NFT Mint of ERC721 and ERC1155 on EVM Compatible chains.',
-// };
 
 export default function RootLayout({
   children,
@@ -48,7 +30,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <WagmiConfig client={client}>
+      <Config>
         <body
           className={`${inter.variable} font-inter antialiased bg-white text-gray-900 tracking-tight`}
         >
@@ -58,7 +40,7 @@ export default function RootLayout({
             <Banner />
           </div>
         </body>
-      </WagmiConfig>
+      </Config>
     </html>
   );
 }

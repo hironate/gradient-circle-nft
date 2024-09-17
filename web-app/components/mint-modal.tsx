@@ -1,8 +1,6 @@
 import { SetStateAction, useState } from 'react';
 import { QuantitySelector } from './quantity-selector';
-import { useAccount, useConnect, useSigner } from 'wagmi';
-import { getNetwork } from '@wagmi/core';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { useAccount, useConnect } from 'wagmi';
 import { toast, ToastContainer } from 'react-toastify';
 import {
   contractAddresses721,
@@ -17,6 +15,7 @@ import { Oval } from 'react-loader-spinner';
 import Link from 'next/link';
 import Image from 'next/image';
 import LinkImage from '@/public/link.png';
+import { useSigner } from './hooks/useSigner';
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
 const MintModal = ({ isOpen, onClose }: MintModalProps) => {
@@ -26,20 +25,8 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [transactionHash, setTransactionHash] = useState<string>('');
   const [currentExplorer, setCurrentExplorer] = useState<string>('');
-  const { data: signer } = useSigner();
-  const { address, isConnected } = useAccount();
-
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
-  const setConnection = () => {
-    try {
-      if (!isConnected) {
-        connect();
-        localStorage.setItem('isWalletConnected', 'true');
-      }
-    } catch (error) {}
-  };
+  const { isConnected, chain, chainId } = useAccount();
+  const signer = useSigner({ chainId });
 
   const toggleModal = () => {
     setTransactionHash('');
@@ -61,8 +48,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const handleMint = async () => {
     try {
       setIsLoading(true);
-      setConnection();
-      let chainId: number = getNetwork().chain?.id || 1;
+      const chainId = chain?.id || 11155111;
       handleExplorerChange(chainId);
       if (selectedToken === 'ERC721') {
         const contractAddress: string = contractAddresses721[chainId];
@@ -110,6 +96,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
       setTransactionHash('');
       onClose();
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
     }
   };
@@ -303,7 +290,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                   <button
                     type="button"
                     className="text-white bg-blue-700 flex hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 justify-between "
-                    onClick={handleMint}
+                    onClick={isConnected ? handleMint : undefined}
                     disabled={isLoading}
                   >
                     {isLoading && (
@@ -316,8 +303,8 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                           strokeWidthSecondary={4}
                         />
                       </div>
-                    )}{' '}
-                    {mintButtonText}
+                    )}
+                    {isConnected ? mintButtonText : 'Connect Wallet'}
                   </button>
                 </div>
               </div>
