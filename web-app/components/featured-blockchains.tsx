@@ -3,31 +3,24 @@ import Image from 'next/image';
 import EthereumLogo from '@/public/images/ethereum.png';
 import OpenseaLogo from '@/public/images/opensea.png';
 import BscLogo from '@/public/images/bsc.png';
+import BaseLogo from '@/public/images/base.png';
 import PolygonLogo from '@/public/images/polygon.png';
 
 export default function FeaturedBlokchains() {
   const contractsAndLinks = [
-    {
-      logo: EthereumLogo,
-      chain: 'Mainnet',
-      etherscanLink:
-        'https://sepolia.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
-      marketplaceLink: 'https://opensea.io/collection/gradient-circle',
-    },
+    // {
+    //   logo: EthereumLogo,
+    //   chain: 'Mainnet',
+    //   etherscanLink:
+    //     'https://sepolia.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+    //   marketplaceLink: 'https://opensea.io/collection/gradient-circle',
+    // },
     {
       logo: EthereumLogo,
       chain: 'Sepolia',
       etherscanLink:
         'https://sepolia.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
       marketplaceLink: '',
-    },
-    {
-      logo: EthereumLogo,
-      chain: 'Goerli',
-      etherscanLink:
-        'https://goerli.etherscan.io/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
-      marketplaceLink:
-        'https://testnets.opensea.io/collection/gradient-circle-721-goerli',
     },
     // {
     //   logo: PolygonLogo,
@@ -37,11 +30,11 @@ export default function FeaturedBlokchains() {
     // },
     {
       logo: PolygonLogo,
-      chain: 'Mumbai',
+      chain: 'Amoy',
       etherscanLink:
-        'https://mumbai.polygonscan.com/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
+        'https://amoy.polygonscan.com/address/0x0cfd47c84bc6cda59c76be4f8b74366abd7386ed#code',
       marketplaceLink:
-        'https://testnets.opensea.io/collection/gradient-circle-721-polygon-testnet',
+        'https://testnets.opensea.io/collection/gradient-circle-721-polygon-amoy',
     },
     // {
     //   logo: BscLogo,
@@ -52,6 +45,14 @@ export default function FeaturedBlokchains() {
     {
       logo: BscLogo,
       chain: 'Bsc Testnet',
+      etherscanLink:
+        'https://testnet.bscscan.com/address/0x0Cfd47C84BC6cDa59c76bE4f8B74366ABD7386ED#code',
+      marketplaceLink:
+        'https://testnets.opensea.io/collection/gradient-circle-721-base-sepolia',
+    },
+    {
+      logo: BaseLogo,
+      chain: 'Base Seplia',
       etherscanLink:
         'https://testnet.bscscan.com/address/0x0Cfd47C84BC6cDa59c76bE4f8B74366ABD7386ED#code',
       marketplaceLink:

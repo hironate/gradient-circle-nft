@@ -1,14 +1,13 @@
 declare var window: any;
 import React, { useEffect, useState, useRef } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useSwitchChain } from 'wagmi';
 import Image from 'next/image';
-import { getNetwork } from '@wagmi/core';
 import { blockchains } from '@/utils/constants';
-import { switchNetwork } from '@wagmi/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function ChainSelector() {
-  const { isConnected } = useAccount();
+  const { isConnected, chain } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
 
   interface MyObject {
     name: string;
@@ -22,7 +21,7 @@ function ChainSelector() {
   });
 
   useEffect(() => {
-    let chainId = getNetwork().chain?.id || 1;
+    let chainId = chain?.id || 11155111;
     setChain(chainId);
   }, [isConnected]);
 
@@ -42,7 +41,7 @@ function ChainSelector() {
 
   const changeChain = async (chainId: any) => {
     try {
-      const network = await switchNetwork({ chainId });
+      const network = await switchChainAsync({ chainId });
       setChain(network.id);
     } catch (error) {
       notify(chainId);
