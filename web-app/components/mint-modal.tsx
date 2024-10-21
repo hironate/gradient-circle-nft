@@ -1,6 +1,6 @@
-import { SetStateAction, useState } from 'react';
+import React, { SetStateAction, useCallback, useMemo, useState } from 'react';
 import { QuantitySelector } from './quantity-selector';
-import { useAccount, useConnect } from 'wagmi';
+import { useAccount } from 'wagmi';
 import { toast, ToastContainer } from 'react-toastify';
 import {
   contractAddresses721,
@@ -16,6 +16,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import LinkImage from '@/public/link.png';
 import { useSigner } from './hooks/useSigner';
+import { isChainSupported as isSupported } from '@/utils/web3';
 type MintModalProps = { isOpen: boolean; onClose: () => void };
 
 const MintModal = ({ isOpen, onClose }: MintModalProps) => {
@@ -45,7 +46,10 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
   const handleExplorerChange = (chainId: number) => {
     setCurrentExplorer(explorers[chainId]);
   };
-  const handleMint = async () => {
+
+  const isChainSupported = useMemo(() => isSupported(chainId), [chainId]);
+
+  const handleMint = useCallback(async () => {
     try {
       setIsLoading(true);
       const chainId = chain?.id || 11155111;
@@ -99,7 +103,7 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
       console.log(error);
       setIsLoading(false);
     }
-  };
+  }, [chain, signer, selectedToken]);
 
   return (
     <>
@@ -290,7 +294,9 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                   <button
                     type="button"
                     className="text-white bg-blue-700 flex hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 justify-between "
-                    onClick={isConnected ? handleMint : undefined}
+                    onClick={
+                      isConnected && isChainSupported ? handleMint : undefined
+                    }
                     disabled={isLoading}
                   >
                     {isLoading && (
@@ -304,7 +310,11 @@ const MintModal = ({ isOpen, onClose }: MintModalProps) => {
                         />
                       </div>
                     )}
-                    {isConnected ? mintButtonText : 'Connect Wallet'}
+                    {isConnected
+                      ? isChainSupported
+                        ? mintButtonText
+                        : 'Unsupported Network'
+                      : 'Connect Wallet'}
                   </button>
                 </div>
               </div>
